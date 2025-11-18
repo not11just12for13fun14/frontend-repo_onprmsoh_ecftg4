@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ShieldCheck, GraduationCap, ReceiptPercent, ThermometerSun, Utensils, ClipboardList } from 'lucide-react'
+import { ShieldCheck, GraduationCap, Percent, ThermometerSun, Utensils, ClipboardList } from 'lucide-react'
 
 const features = [
   {
@@ -28,7 +28,7 @@ const features = [
     desc: 'From QSR to hospitality, we tailor to your kitchen and team size.'
   },
   {
-    icon: ReceiptPercent,
+    icon: Percent,
     title: 'Lower Cost of Risk',
     desc: 'Reduce incidents, labor, and waste with proactive systems.'
   }
