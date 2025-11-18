@@ -1,12 +1,38 @@
-import Spline from '@splinetool/react-spline'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
+let SplineComp = null
+
 export default function Hero() {
+  const [mounted, setMounted] = useState(false)
+  const [splineOk, setSplineOk] = useState(true)
+
+  useEffect(() => {
+    setMounted(true)
+    // Dynamically import Spline only on client to avoid any runtime issues
+    import('@splinetool/react-spline')
+      .then((mod) => {
+        SplineComp = mod.default
+        setSplineOk(true)
+      })
+      .catch(() => {
+        setSplineOk(false)
+      })
+  }, [])
+
   return (
-    <section className="relative min-h-[92vh] overflow-hidden">
-      {/* 3D Spline background */}
+    <section className="relative min-h-[92vh] overflow-hidden bg-slate-950">
+      {/* 3D Spline background (only when client + loaded) */}
       <div className="absolute inset-0">
-        <Spline scene="https://prod.spline.design/LU2mWMPbF3Qi1Qxh/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+        {mounted && splineOk && SplineComp ? (
+          <SplineComp
+            scene="https://prod.spline.design/LU2mWMPbF3Qi1Qxh/scene.splinecode"
+            style={{ width: '100%', height: '100%' }}
+          />
+        ) : (
+          // Fallback gradient background so content is visible even if Spline fails
+          <div className="w-full h-full bg-[radial-gradient(60%_60%_at_50%_0%,rgba(59,130,246,0.35),transparent)]" />
+        )}
       </div>
 
       {/* Gradient overlay for contrast (doesn't block interaction) */}
